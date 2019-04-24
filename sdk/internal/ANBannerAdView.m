@@ -360,12 +360,7 @@
 
             if ([self adType] == ANAdTypeBanner)
             {
-                
                 self.impressionURLs = (NSArray<NSString *> *) [ANGlobal valueOfGetterProperty:@"impressionUrls" forObject:adObjectHandler];
-
-                if (self.window)  {
-                    [self trackImpression];
-                }
             }
 
         } else if ([adObject isKindOfClass:[ANNativeAdResponse class]]) {
@@ -489,7 +484,7 @@
 {
     @synchronized (self)
     {
-        if (self.contentView  && ( [self adType] == ANAdTypeBanner)) {
+        if (self.impressionURLs && self.contentView  && ([self adType] == ANAdTypeBanner)) {
             [ANTrackerManager fireTrackerURLArray:self.impressionURLs];
             self.impressionURLs = nil;
             
