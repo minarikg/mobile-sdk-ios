@@ -356,13 +356,12 @@
                 _loadedAdSize = self.adSize;
                 }
             
-            [self adDidReceiveAd:self];
-
             if ([self adType] == ANAdTypeBanner)
             {
                 self.impressionURLs = (NSArray<NSString *> *) [ANGlobal valueOfGetterProperty:@"impressionUrls" forObject:adObjectHandler];
             }
 
+            [self adDidReceiveAd:self];
         } else if ([adObject isKindOfClass:[ANNativeAdResponse class]]) {
             ANNativeAdResponse  *nativeAdResponse  = (ANNativeAdResponse *)response.adObject;
 
@@ -484,7 +483,7 @@
 {
     @synchronized (self)
     {
-        if (self.impressionURLs && self.contentView  && ([self adType] == ANAdTypeBanner)) {
+        if (self.impressionURLs && self.contentView && ([self adType] == ANAdTypeBanner)) {
             [ANTrackerManager fireTrackerURLArray:self.impressionURLs];
             self.impressionURLs = nil;
             
