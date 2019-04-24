@@ -292,6 +292,12 @@ typedef NS_ENUM(NSUInteger, ANBannerViewAdAlignment) {
 - (void) loadAd;
 
 
+    
+    
+#pragma mark - Tracking
+    
+- (void)trackImpression;
+    
 @end
 
 

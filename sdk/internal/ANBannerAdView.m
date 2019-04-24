@@ -363,21 +363,8 @@
                 
                 self.impressionURLs = (NSArray<NSString *> *) [ANGlobal valueOfGetterProperty:@"impressionUrls" forObject:adObjectHandler];
 
-                @synchronized (self)
-                {
-                    if (self.window)  {
-                        [ANTrackerManager fireTrackerURLArray:self.impressionURLs];
-                        self.impressionURLs = nil;
-                        
-                        // Fire OMID - Impression event only for AppNexus WKWebview TRUE for RTB and SSM
-                        if([self.contentView isKindOfClass:[ANMRAIDContainerView class]])
-                        {
-                            ANMRAIDContainerView *standardAdView = (ANMRAIDContainerView *)self.contentView;
-                            if(standardAdView.webViewController.omidAdSession != nil){
-                                [[ANOMIDImplementation sharedInstance] fireOMIDImpressionOccuredEvent:standardAdView.webViewController.omidAdSession];
-                            }
-                        }
-                    }
+                if (self.window)  {
+                    [self trackImpression];
                 }
             }
 
@@ -496,9 +483,9 @@
 
 
 
-#pragma mark - UIView observer methods.
+#pragma mark - Tracking
 
-- (void)didMoveToWindow
+- (void)trackImpression
 {
     @synchronized (self)
     {
